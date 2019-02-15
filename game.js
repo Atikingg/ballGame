@@ -55,6 +55,7 @@ function draw() {
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
     }
+<<<<<<< HEAD
     if(y + dy < ballRadius) {
     dy = -dy;
     }
@@ -67,6 +68,11 @@ function draw() {
         document.location.reload();
     }
 }
+=======
+    if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+        dy = -dy;
+    }
+>>>>>>> f2c91a33f42950513295e79b75395944bd254547
 
     if(rightPressed && paddleX < canvas.width-paddleWidth) {
         paddleX += 7;
