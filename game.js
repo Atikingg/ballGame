@@ -24,6 +24,7 @@ var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
 var ballColor = "#0095DD";
 var brickColor = "#0095DD";
 var defaultColor = "#0095DD";
+var score = 0;
 
 for(var c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
@@ -63,10 +64,17 @@ function collisionDetection() {
                     dy = -noAccelerate;
                     b.status = 0;
                     ballColor = "blue";
+                    score++;
                 }
             }
         }
     }
+}
+
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Score: "+score, 8, 20);
 }
 
 function changeColor() {
@@ -115,6 +123,8 @@ function draw() {
     drawBall();
     drawPaddle();
     collisionDetection();
+    drawScore();
+
 
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
@@ -130,7 +140,7 @@ function draw() {
         ballColor = defaultColor;
       }
       else {
-        alert("GAME OVER");
+        alert("GAME OVER  "+ "Score: "+score);
         document.location.reload();
       }
     }
