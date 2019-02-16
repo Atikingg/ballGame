@@ -59,7 +59,7 @@ function draw() {
     dy = -dy;
     }
     else if(y + dy > canvas.height-ballRadius) {
-      if(x > paddleX && x < paddleX + paddleWidth) {
+      if(x >= paddleX && x <= paddleX + paddleWidth) {
         dy = - 1.3 * dy;
       }
     else {
@@ -82,4 +82,4 @@ function draw() {
     y += dy;
 }
 
-var interval = setInterval(draw, 10);
+setInterval(draw, 10);
