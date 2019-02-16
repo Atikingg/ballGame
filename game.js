@@ -21,11 +21,14 @@ var brickOffsetLeft = 30;
 var bricks = [];
 var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
 var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+var ballColor = "#0095DD";
+var brickColor = "#0095DD";
+var defaultColor = "#0095DD";
 
 for(var c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
     for(var r=0; r<brickRowCount; r++) {
-        bricks[c][r] = { x: 0, y: 0 };
+        bricks[c][r] = { x: 0, y: 0, status: 1 };
     }
 }
 //var accelerate = 1.3 * dy
@@ -55,19 +58,28 @@ function collisionDetection() {
     for(var c=0; c<brickColumnCount; c++) {
         for(var r=0; r<brickRowCount; r++) {
             var b = bricks[c][r];
-            if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
-                dy = -noAccelerate;
-
-
+            if(b.status == 1) {
+                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                    dy = -noAccelerate;
+                    b.status = 0;
+                    ballColor = "blue";
+                }
             }
         }
     }
 }
 
+function changeColor() {
+  if(y > canvas.height/2){
+    ballColor = defaultColor;
+  }
+}
+
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = ballColor;
+    changeColor();
     ctx.fill();
     ctx.closePath();
 }
@@ -82,15 +94,17 @@ function drawPaddle() {
 function drawBricks() {
     for(var c=0; c<brickColumnCount; c++) {
         for(var r=0; r<brickRowCount; r++) {
-            var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-            var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-            bricks[c][r].x = brickX;
-            bricks[c][r].y = brickY;
-            ctx.beginPath();
-            ctx.rect(brickX, brickY, brickWidth, brickHeight);
-            ctx.fillStyle = "#0095DD";
-            ctx.fill();
-            ctx.closePath();
+          if(bricks[c][r].status == 1) {
+              var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+              var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+              bricks[c][r].x = brickX;
+              bricks[c][r].y = brickY;
+              ctx.beginPath();
+              ctx.rect(brickX, brickY, brickWidth, brickHeight);
+              ctx.fillStyle = "#0095DD";
+              ctx.fill();
+              ctx.closePath();
+          }
         }
     }
 }
@@ -104,6 +118,7 @@ function draw() {
 
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
+        ballColor = defaultColor;
     }
     //if(y + dy < ballRadius) {
     //dy = -dy;
@@ -111,7 +126,8 @@ function draw() {
     /*else*/
     if(y + dy > canvas.height-ballRadius) {
       if(x >= paddleX && x <= paddleX + paddleWidth) {
-        dy = -2*dy;
+        dy = -1.5*dy;
+        ballColor = defaultColor;
       }
       else {
         alert("GAME OVER");
