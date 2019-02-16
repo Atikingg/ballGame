@@ -141,12 +141,13 @@ function draw() {
     /*else*/
     if(y + dy > canvas.height-ballRadius) {
       if(x >= paddleX && x <= paddleX + paddleWidth) {
-        dy = -1.5*dy;
+        dy = -2*dy;
         ballColor = defaultColor;
       }
       else {
         alert("GAME OVER  "+ "Score: "+score);
         document.location.reload();
+        clearInterval(interval);
       }
     }
     if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
