@@ -132,17 +132,18 @@ function draw() {
     //dy = -dy;
     //}
     /*else*/
-    if(y + dy > canvas.height-ballRadius) {
-      if(x >= paddleX && x <= paddleX + paddleWidth) {
+    if(y + dy >= canvas.height-ballRadius-paddleHeight) {
+      if(x >= paddleX && x <= paddleX + paddleWidth ) {
         dy = -2*dy;
         //ballColor = defaultColor;
       }
-      else {
+    }
+    if(y + dy >= canvas.height-ballRadius) {
         alert("GAME OVER  "+ "Score: "+score);
         document.location.reload();
         clearInterval(interval);
       }
-    }
+
     if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
         dy = -noAccelerate;
     }
