@@ -82,4 +82,4 @@ function draw() {
     y += dy;
 }
 
-setInterval(draw, 10);
+var interval = setInterval(draw, 10);
