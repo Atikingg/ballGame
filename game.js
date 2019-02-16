@@ -21,10 +21,11 @@ var brickOffsetLeft = 30;
 var bricks = [];
 var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
 var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-var ballColor = "#0095DD";
-var brickColor = "#0095DD";
-var defaultColor = "#0095DD";
+var ballColor = "#00a9ff";
+var defaultColor = "#00a9ff";
 var score = 0;
+
+
 
 for(var c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
@@ -61,7 +62,6 @@ function collisionDetection() {
             var b = bricks[c][r];
             if(b.status == 1) {
                 if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
-                    ballColor = "blue";
                     dy = -noAccelerate;
                     b.status = 0;
                     score++;
@@ -82,24 +82,18 @@ function drawScore() {
     ctx.fillText("Score: "+score, 8, 20);
 }
 
-function changeColor() {
-  if(y > canvas.height/2){
-    ballColor = defaultColor;
-  }
-}
 
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
     ctx.fillStyle = ballColor;
-    changeColor();
     ctx.fill();
     ctx.closePath();
 }
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "#4410bc";
     ctx.fill();
     ctx.closePath();
 }
@@ -114,7 +108,7 @@ function drawBricks() {
               bricks[c][r].y = brickY;
               ctx.beginPath();
               ctx.rect(brickX, brickY, brickWidth, brickHeight);
-              ctx.fillStyle = "#0095DD";
+              ctx.fillStyle = "#b407c4";
               ctx.fill();
               ctx.closePath();
           }
@@ -133,7 +127,6 @@ function draw() {
 
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
-        ballColor = defaultColor;
     }
     //if(y + dy < ballRadius) {
     //dy = -dy;
@@ -142,7 +135,7 @@ function draw() {
     if(y + dy > canvas.height-ballRadius) {
       if(x >= paddleX && x <= paddleX + paddleWidth) {
         dy = -2*dy;
-        ballColor = defaultColor;
+        //ballColor = defaultColor;
       }
       else {
         alert("GAME OVER  "+ "Score: "+score);
