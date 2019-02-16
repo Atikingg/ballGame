@@ -5,11 +5,13 @@ var x = canvas.width/2;
 var y = canvas.height-30;
 var dx = 2;
 var dy = -2;
+var noAccelerate = -2;
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
 var rightPressed = false;
 var leftPressed = false;
+//var accelerate = 1.3 * dy
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -55,20 +57,21 @@ function draw() {
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
     }
-    if(y + dy < ballRadius) {
-    dy = -dy;
-    }
-    else if(y + dy > canvas.height-ballRadius) {
+    //if(y + dy < ballRadius) {
+    //dy = -dy;
+    //}
+    /*else*/
+    if(y + dy > canvas.height-ballRadius) {
       if(x >= paddleX && x <= paddleX + paddleWidth) {
-        dy = - 1.3 * dy;
+        dy = - 2 * dy;
       }
-    else {
+      else {
         alert("GAME OVER");
         document.location.reload();
+      }
     }
-}
     if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
-        dy = -dy;
+        dy = -noAccelerate;
     }
 
     if(rightPressed && paddleX < canvas.width-paddleWidth) {
